@@ -10,10 +10,16 @@ const Header = () => {
           alt="national university logo"
           className="h-10 w-10 mr-2"
         />
-        <h1 className="text-[1.125rem] text-white tracking-widest">CLASSTRACK</h1>
+        <h1 className="text-[1.125rem] text-white tracking-widest">
+          CLASSTRACK
+        </h1>
       </div>
       <div className="flex items-center max-w-[]">
-        <img src={profile} alt="user profile picture" className="rounded-full size-8 mr-2" />
+        <img
+          src={profile}
+          alt="user profile picture"
+          className="rounded-full size-8 mr-2"
+        />
         <p className="text-white text-sm">Jonel Villaver</p>
       </div>
     </header>

@@ -6,6 +6,7 @@ export default {
       fontFamily: {
         geist: ['"Geist Mono"', "monospace"],
         hostGrotest: ["Host Grotesk", "monospace"],
+        montserrat: ["Montserrat", "monospace"],
       },
     },
   },

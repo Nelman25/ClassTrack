@@ -4,7 +4,7 @@ import { TbEdit } from "react-icons/tb";
 
 const Sidebar = () => {
   return (
-    <aside className="max-w-[18rem] max-h-[50rem] h-[50rem] pt-24 ">
+    <aside className="max-w-[18rem] max-h-[60rem] h-[60rem] pt-24 bg-slate-50">
       <nav>
         <ul className="">
           <li className="flex items-center gap-2 text-slate-700 text-2xl w-full px-8 py-4 hover:bg-blue-400 hover:text-white">

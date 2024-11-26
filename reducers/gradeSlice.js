@@ -8,6 +8,7 @@ const studentsCollectionsRef = collection(db, "Students");
 const initialState = {
   loading: false,
   grades: [],
+  names: [],
   error: "",
 };
 
@@ -16,9 +17,9 @@ export const fetchGrades = createAsyncThunk("grades/fetchGrades", async () => {
     const data = await getDocs(studentsCollectionsRef);
     const grades = data.docs.map((doc) => {
       const id = doc.id;
-      const { quizzes, labScores, project, finalExam } = doc.data();
+      const { name, quizzes, labScores, project, finalExam } = doc.data();
 
-      return { id, quizzes, labScores, project, finalExam };
+      return { id, name, quizzes, labScores, project, finalExam };
     });
     return grades;
   } catch (err) {

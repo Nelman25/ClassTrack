@@ -12,7 +12,7 @@ const initialState = {
 };
 
 export const fetchStudentInfo = createAsyncThunk(
-  "info/fetchStudentInfo",
+  "studentInfo/fetchStudentInfo",
   async () => {
     try {
       const data = await getDocs(studentCollectionsRef);
@@ -29,7 +29,7 @@ export const fetchStudentInfo = createAsyncThunk(
 );
 
 const studentInfoSlice = createSlice({
-  name: "info",
+  name: "studentInfo",
   initialState,
   extraReducers: (builder) => {
     builder.addCase(fetchStudentInfo.pending, (state) => {

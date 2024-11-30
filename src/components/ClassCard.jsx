@@ -4,7 +4,7 @@ import { fetchClasses } from "../../reducers/classSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchStudents } from "../../reducers/studentSlice";
 
-const SubjectCard = () => {
+const ClassCard = () => {
   const classes = useSelector((state) => state.classes.classes);
   const students = useSelector((state) => state.students.students);
   const loading = useSelector((state) => state.classes.loading);
@@ -44,4 +44,4 @@ const SubjectCard = () => {
   );
 };
 
-export default SubjectCard;
+export default ClassCard;

@@ -28,6 +28,11 @@ export const fetchStudents = createAsyncThunk(
 const studentSlice = createSlice({
   name: "students",
   initialState,
+  reducers: {
+    addStudent: (state, action) => {
+      state.students = [...state.students, action.payload];
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchStudents.pending, (state) => {
       state.loading = true;
@@ -44,6 +49,7 @@ const studentSlice = createSlice({
   },
 });
 
+export const { addStudent } = studentSlice.actions;
 export default studentSlice.reducer;
 
 // TODO: Ifetch nalang lahat ng student info ng isang class, let's say ang napili is

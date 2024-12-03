@@ -1,18 +1,9 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchGrades } from "../../reducers/gradeSlice";
+import { useSelector } from "react-redux";
 import Loading from "./Loading";
 
 const GradingSheet = () => {
-  const grades = useSelector((state) => state.grade.grades);
-  const loading = useSelector((state) => state.grade.loading);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchGrades());
-  }, [dispatch]);
-
-  console.log(grades);
+  const grades = useSelector((state) => state.students.students);
+  const loading = useSelector((state) => state.students.loading);
 
   return (
     <div className="w-full mt-12 bg-slate-100 max-h-[47rem] overflow-x-scroll max-w-[90rem] thin-scrollbar font-montserrat border border-slate-400 rounded-md">
@@ -32,66 +23,66 @@ const GradingSheet = () => {
         grades.map((student) => {
           return (
             <div
-              key={student.id}
+              key={student.studentNumber}
               className="grid grid-cols-[1fr_2fr_1fr_1fr_1fr_1fr] even:bg-blue-200 odd:bg-white"
             >
               <p className="px-2 py-4 text-sm font-medium">{student.name}</p>
               <div className="grid grid-cols-5 text-center">
                 <input
-                  className="py-4 text-center bg-inherit border-l border-b border-b-black border-l-black"
+                  className="gradingSheetCell"
                   type="number"
                   defaultValue={student.quizzes.quiz1}
                 />
                 <input
-                  className="py-4 text-center bg-inherit border-l border-b border-b-black border-l-black"
+                  className="gradingSheetCell"
                   type="number"
                   defaultValue={student.quizzes.quiz2}
                 />
                 <input
-                  className="py-4 text-center bg-inherit border-l border-b border-b-black border-l-black"
+                  className="gradingSheetCell"
                   type="number"
                   defaultValue={student.quizzes.quiz3}
                 />
                 <input
-                  className="py-4 text-center bg-inherit border-l border-b border-b-black border-l-black"
+                  className="gradingSheetCell"
                   type="number"
                   defaultValue={student.quizzes.quiz4}
                 />
                 <input
-                  className="py-4 text-center bg-inherit border-l border-b border-b-black border-l-black"
+                  className="gradingSheetCell"
                   type="number"
                   defaultValue={student.quizzes.quiz5}
                 />
               </div>
               <div className="grid grid-cols-3 text-center">
                 <input
-                  className="py-4 text-center bg-inherit border-l border-b border-b-black border-l-black"
+                  className="gradingSheetCell"
                   type="number"
                   defaultValue={student.labScores.lab1}
                 />
                 <input
-                  className="py-4 text-center bg-inherit border-l border-b border-b-black border-l-black"
+                  className="gradingSheetCell"
                   type="number"
                   defaultValue={student.labScores.lab2}
                 />
                 <input
-                  className="py-4 text-center bg-inherit border-l border-b border-b-black border-l-black"
+                  className="gradingSheetCell"
                   type="number"
                   defaultValue={student.labScores.lab3}
                 />
               </div>
               <input
-                className="py-4 text-center bg-inherit border-l border-b border-b-black border-l-black"
+                className="gradingSheetCell"
                 type="number"
                 defaultValue={student.project}
               />
               <input
-                className="py-4 text-center bg-inherit border-l border-b border-b-black border-l-black"
+                className="gradingSheetCell"
                 type="number"
                 defaultValue={student.finalExam}
               />
               <input
-                className="py-4 text-center bg-inherit border-l border-b border-b-black border-l-black"
+                className="gradingSheetCell"
                 type="number"
                 defaultValue={student.finalExam}
               />

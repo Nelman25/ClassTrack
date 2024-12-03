@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -13,22 +14,24 @@ import { Label } from "@/components/ui/label";
 import { createClass } from "../../services";
 
 export function CreateClassDialog() {
+  const [isModalOpen, setModalOpen] = useState(false);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
     const newClass = Object.fromEntries(formData.entries());
     createClass(newClass);
+
+    setModalOpen(false);
   };
 
   return (
-    <Dialog>
+    <Dialog open={isModalOpen} onOpenChange={setModalOpen}>
       <DialogTrigger asChild>
-        <div className="w-full flex justify-end max-w-[1440px] mx-auto mt-8">
-          <Button className="text-2xl px-4 py-6 bg-green-200 text-slate-700 hover:bg-green-300">
-            Create class
-          </Button>
-        </div>
+        <Button className="text-2xl px-4 py-6 bg-green-200 text-black hover:bg-green-300">
+          Create class
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -44,6 +47,7 @@ export function CreateClassDialog() {
                 Subject
               </Label>
               <Input
+                required
                 placeholder="Information Management"
                 id="subject"
                 name="subject"
@@ -55,6 +59,7 @@ export function CreateClassDialog() {
                 Section
               </Label>
               <Input
+                required
                 placeholder="COM231"
                 name="section"
                 id="section"
@@ -66,6 +71,7 @@ export function CreateClassDialog() {
                 Subject code
               </Label>
               <Input
+                required
                 placeholder="CTINFMGL"
                 id="subjectcode"
                 name="subjectcode"
@@ -73,13 +79,14 @@ export function CreateClassDialog() {
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="username" className="text-right">
+              <Label htmlFor="schedule" className="text-right">
                 Schedule
               </Label>
               <Input
+                required
                 placeholder="MWF 3:00pm - 5:00pm"
-                id="username"
-                name="address"
+                id="schedule"
+                name="schedule"
                 className="col-span-3"
               />
             </div>

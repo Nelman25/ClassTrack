@@ -12,8 +12,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useSelector } from "react-redux";
 import { addStudent } from "../../services";
+import { useState } from "react";
 
 export function AddStudentDialog() {
+  const [isModalOpen, setModalOpen] = useState(false);
   const selectedClassId = useSelector(
     (state) => state.userActivity.selectedClassId
   );
@@ -45,7 +47,7 @@ export function AddStudentDialog() {
   };
 
   return (
-    <Dialog>
+    <Dialog open={isModalOpen} onOpenChange={setModalOpen}>
       <DialogTrigger asChild>
         <Button className="w-full bg-green-400 text-xl py-8 hover:bg-green-500">
           Add Student

@@ -55,34 +55,3 @@ export const subscribeToClasses = () => (dispatch) => {
 
 export default classSlice.reducer;
 
-// export const fetchClasses = createAsyncThunk(
-//   "classes/fetchClasses",
-//   async () => {
-//     try {
-//       const data = await getDocs(classCollectionRef);
-//       const Class = data.docs.map((doc) => {
-//         const id = doc.id;
-//         const classInfo = doc.data();
-//         return { id, ...classInfo };
-//       });
-//       return Class;
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   }
-// );
-
-// extraReducers: (builder) => {
-//   builder.addCase(fetchClasses.pending, (state) => {
-//     state.loading = true;
-//     state.error = "";
-//   });
-//   builder.addCase(fetchClasses.fulfilled, (state, action) => {
-//     state.loading = false;
-//     state.classes = action.payload;
-//   });
-//   builder.addCase(fetchClasses.rejected, (state, action) => {
-//     state.loading = false;
-//     state.error = action.error.message || "Failed to fetch classes.";
-//   });
-// },

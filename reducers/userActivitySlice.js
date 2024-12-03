@@ -14,5 +14,7 @@ const userActivitySlice = createSlice({
   },
 });
 
+export const currentSelectedClassId = (state) =>
+  state.userActivity.selectedClassId;
 export const { setSelectedClass } = userActivitySlice.actions;
 export default userActivitySlice.reducer;

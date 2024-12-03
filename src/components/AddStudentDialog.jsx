@@ -22,9 +22,26 @@ export function AddStudentDialog() {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
+    const gradesTemplate = {
+      quizzes: {
+        quiz1: 0,
+        quiz2: 0,
+        quiz3: 0,
+        quiz4: 0,
+        quiz5: 0,
+      },
+      labScores: {
+        lab1: 0,
+        lab2: 0,
+        lab3: 0,
+      },
+      project: 0,
+      finalExam: 0,
+    };
 
     const data = Object.fromEntries(formData.entries());
-    addStudent(data, selectedClassId);
+    const newStudent = { ...data, ...gradesTemplate };
+    addStudent(newStudent, selectedClassId);
   };
 
   return (

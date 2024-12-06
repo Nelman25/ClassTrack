@@ -22,14 +22,14 @@ const AttendanceSheet = () => {
         <Loading />
       ) : (
         <>
-          <header className="grid grid-cols-[repeat(50,60px)] w-full bg-[#2b2b8f] h-[3rem]">
-            <p className="text-white text-base col-span-4 indent-3 flex items-center border-b border-b-slate-300 border-r border-r-slate-300 sticky left-0">
+          <header className="grid grid-cols-[repeat(50,80px)] w-full bg-[#2b2b8f] h-[3rem]">
+            <p className="text-white text-lg col-span-4 indent-3 font-medium flex items-center bg-[#2b2b8f] border-b border-b-slate-300 border-r border-r-slate-300 sticky left-0">
               Student name
             </p>
             {Array.from({ length: 46 }).map((_, index) => (
               <input
                 key={index}
-                type="text"
+                type="date"
                 className="border-b border-b-slate-300 border-r border-r-slate-300 p-1 text-center bg-[#343497] text-white"
               />
             ))}
@@ -38,9 +38,13 @@ const AttendanceSheet = () => {
             return (
               <div
                 key={student.studentNumber}
-                className="grid grid-cols-[repeat(50,60px)] indent-3"
+                className="grid grid-cols-[repeat(50,80px)] indent-3"
               >
-                <p className={`text-sm border-b border-b-white col-span-4 py-2 border-r border-r-slate-300 sticky left-0 ${index % 0 ? "bg-white" : "bg-blue-100"}`}>
+                <p
+                  className={`text-sm border-b border-b-white col-span-4 py-2 border-r border-r-slate-300 sticky left-0 ${
+                    index % 2 === 0 ? "bg-blue-100" : "bg-white"
+                  }`}
+                >
                   {student.name}
                 </p>
                 {Array.from({ length: 46 }).map((_, index) => (

@@ -17,7 +17,7 @@ const GradingSheet = () => {
   return (
     <div className="w-full h-[54rem] mx-4 overflow-x-scroll thin-scrollbar font-montserrat">
       <header className="bg-[#2b2b8f] sticky top-0">
-        <ul className="grid grid-cols-[1fr_2fr_1fr_1fr_1fr_1fr] items-center text-center text-white text-xl font-montserrat font-semibold">
+        <ul className="grid grid-cols-[1fr_2fr_1fr_1fr_1fr_1fr] items-center text-center text-white text-lg font-montserrat font-semibold">
           <li className="py-2 border-l">Student name</li>
           <li className="py-2 border-l">Quizzes</li>
           <li className="py-2 border-l">Lab Activity</li>

@@ -6,7 +6,7 @@ const RootLayout = () => {
   return (
     <>
       <Header />
-      <main className="flex max-w-full">
+      <main className="flex mx-auto ">
         <Sidebar />
         <Outlet />
       </main>

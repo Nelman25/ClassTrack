@@ -30,7 +30,7 @@ const studentSlice = createSlice({
   initialState,
   reducers: {
     addStudent: (state, action) => {
-      state.students = [...state.students, action.payload];
+      state.students.push(action.payload);
     },
   },
   extraReducers: (builder) => {

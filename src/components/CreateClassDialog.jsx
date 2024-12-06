@@ -92,7 +92,9 @@ export function CreateClassDialog() {
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit">Create class</Button>
+            <Button className="bg-green-500 hover:bg-green-600" type="submit">
+              Create class
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>

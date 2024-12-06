@@ -1,15 +1,14 @@
 import Loading from "./Loading";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchStudents } from "../../reducers/studentSlice";
 import { useNavigate } from "react-router-dom";
 import { setSelectedClass } from "../../reducers/userActivitySlice";
 import { subscribeToClasses } from "../../reducers/classSlice";
 import CreateClassDialog from "./CreateClassDialog";
 
 const ClassCard = () => {
-  const dispatch = useDispatch();
   const { classes, loading } = useSelector((state) => state.classes);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,9 +22,8 @@ const ClassCard = () => {
   }, [dispatch]);
 
   const handleSelectClass = (classId) => {
-    dispatch(fetchStudents(classId));
     dispatch(setSelectedClass(classId));
-    navigate("/masterlist");
+    navigate(`/masterlist/${classId}`);
   };
 
   return (

@@ -10,7 +10,7 @@ export const createClass = async (newClass) => {
   }
 };
 
-export const addStudent = async (newStudent, classId) => {
+export const addStudentToDB = async (newStudent, classId) => {
   try {
     const docRef = await addDoc(
       collection(db, `Classes/${classId}/Students`),

@@ -10,12 +10,14 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useSelector } from "react-redux";
-import { addStudent } from "../../services";
+import { useDispatch, useSelector } from "react-redux";
+import { addStudentToDB } from "../../services";
+import { addStudent } from "../../reducers/studentSlice";
 import { useState } from "react";
 
 export function AddStudentDialog() {
   const [isModalOpen, setModalOpen] = useState(false);
+  const dispatch = useDispatch();
   const selectedClassId = useSelector(
     (state) => state.userActivity.selectedClassId
   );
@@ -43,13 +45,16 @@ export function AddStudentDialog() {
 
     const data = Object.fromEntries(formData.entries());
     const newStudent = { ...data, ...gradesTemplate };
-    addStudent(newStudent, selectedClassId);
+
+    addStudentToDB(newStudent, selectedClassId);
+    dispatch(addStudent(newStudent));
+    setModalOpen(false);
   };
 
   return (
     <Dialog open={isModalOpen} onOpenChange={setModalOpen}>
       <DialogTrigger asChild>
-        <Button className="w-full bg-green-400 text-xl py-8 hover:bg-green-500">
+        <Button className="w-full bg-green-400 text-lg py-6 hover:bg-green-500">
           Add Student
         </Button>
       </DialogTrigger>
@@ -103,7 +108,9 @@ export function AddStudentDialog() {
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit">Add Student</Button>
+            <Button className="bg-green-500 hover:bg-green-600" type="submit">
+              Add Student
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>

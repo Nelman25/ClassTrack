@@ -1,12 +1,21 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { fetchStudents } from "../../reducers/studentSlice";
 import Loading from "./Loading";
 
 const GradingSheet = () => {
+  const dispatch = useDispatch();
   const grades = useSelector((state) => state.students.students);
   const loading = useSelector((state) => state.students.loading);
+  const { classId } = useParams();
+
+  useEffect(() => {
+    dispatch(fetchStudents(classId));
+  }, [dispatch, classId]);
 
   return (
-    <div className="w-full mt-12 bg-slate-100 max-h-[47rem] overflow-x-scroll max-w-[90rem] thin-scrollbar font-montserrat border border-slate-400 rounded-md">
+    <div className="w-full h-[54rem] mx-4 overflow-x-scroll thin-scrollbar font-montserrat">
       <header className="bg-[#2b2b8f] sticky top-0">
         <ul className="grid grid-cols-[1fr_2fr_1fr_1fr_1fr_1fr] items-center text-center text-white text-xl font-montserrat font-semibold">
           <li className="py-2 border-l">Student name</li>
@@ -24,9 +33,11 @@ const GradingSheet = () => {
           return (
             <div
               key={student.studentNumber}
-              className="grid grid-cols-[1fr_2fr_1fr_1fr_1fr_1fr] even:bg-blue-200 odd:bg-white"
+              className="grid grid-cols-[1fr_2fr_1fr_1fr_1fr_1fr] even:bg-blue-100 odd:bg-white"
             >
-              <p className="px-2 py-4 text-sm font-medium">{student.name}</p>
+              <p className="px-2 py-4 text-sm font-medium border-b border-b-black">
+                {student.name}
+              </p>
               <div className="grid grid-cols-5 text-center">
                 <input
                   className="gradingSheetCell"

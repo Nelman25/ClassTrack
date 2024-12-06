@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <header className="flex justify-between mx-auto bg-[#2E2EA1] px-8 py-2 font-montserrat border-b-4 border-b-yellow-500">
+    <header className="flex justify-between bg-[#2E2EA1] px-8 py-2 font-montserrat border-b-4 border-b-yellow-500">
       <Link to="/dashboard">
         <div className="flex items-center">
           <img

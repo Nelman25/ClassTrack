@@ -1,16 +1,18 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Dashboard from "./components/Dashboard";
 import RootLayout from "./components/RootLayout";
-import MasterList from "./components/Masterlist";
+import Masterlist from "./components/Masterlist";
 import GradingSheet from "./components/GradingSheet";
+import Dashboard from "./components/Dashboard";
+import AttendanceSheet from "./components/AttendanceSheet";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
     children: [
-      { path: "/masterlist", element: <MasterList /> },
-      { path: "/gradingsheet", element: <GradingSheet /> },
+      { path: "/masterlist/:classId", element: <Masterlist /> },
+      { path: "/gradingsheet/:classId", element: <GradingSheet /> },
+      { path: "/attendancesheet/:classId", element: <AttendanceSheet /> },
     ],
   },
   {

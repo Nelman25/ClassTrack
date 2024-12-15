@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setSelectedClass } from "../../reducers/userActivitySlice";
 import { subscribeToClasses } from "../../reducers/classSlice";
+import { fetchStudents } from "../../reducers/studentSlice";
 import CreateClassDialog from "./CreateClassDialog";
 
 const ClassCard = () => {
@@ -23,6 +24,7 @@ const ClassCard = () => {
 
   const handleSelectClass = (classId) => {
     dispatch(setSelectedClass(classId));
+    dispatch(fetchStudents(classId));
     navigate(`/masterlist/${classId}`);
   };
 
@@ -37,7 +39,7 @@ const ClassCard = () => {
       {loading ? (
         <Loading size={10} />
       ) : (
-        <div className="max-w-[1440px] font-montserrat mx-auto grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-10 mt-6">
+        <div className="max-w-[1440px] px-8 font-montserrat mx-auto grid grid-cols-[repeat(auto-fit,minmax(400px,1fr))] gap-10 mt-6">
           {classes.map((Class) => {
             return (
               <div

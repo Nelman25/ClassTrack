@@ -1,29 +1,21 @@
-import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
-import { useEffect } from "react";
-import { fetchStudents } from "../../reducers/studentSlice";
+import { useSelector } from "react-redux";
+import { gradeCategories } from "@/lib/constants";
+import GradeCell from "./GradeCell";
 import Loading from "./Loading";
 
 const GradingSheet = () => {
-  const dispatch = useDispatch();
   const grades = useSelector((state) => state.students.students);
   const loading = useSelector((state) => state.students.loading);
-  const { classId } = useParams();
-
-  useEffect(() => {
-    dispatch(fetchStudents(classId));
-  }, [dispatch, classId]);
 
   return (
-    <div className="w-full h-[54rem] mx-4 overflow-x-scroll thin-scrollbar font-montserrat">
+    <div className="h-[54rem] max-w-[105rem] overflow-x-scroll thin-scrollbar font-montserrat">
       <header className="bg-[#2b2b8f] sticky top-0">
         <ul className="grid grid-cols-[1fr_2fr_1fr_1fr_1fr_1fr] items-center text-center text-white text-lg font-montserrat font-semibold">
-          <li className="py-2 border-l">Student name</li>
-          <li className="py-2 border-l">Quizzes</li>
-          <li className="py-2 border-l">Lab Activity</li>
-          <li className="py-2 border-l">Project</li>
-          <li className="py-2 border-l">Final exam</li>
-          <li className="py-2 border-l">Final Grade</li>
+          {gradeCategories.map((category) => (
+            <li key={category} className="py-2 border-l">
+              {category}
+            </li>
+          ))}
         </ul>
       </header>
       {loading ? (
@@ -39,64 +31,36 @@ const GradingSheet = () => {
                 {student.name}
               </p>
               <div className="grid grid-cols-5 text-center">
-                <input
-                  className="gradingSheetCell"
-                  type="number"
-                  defaultValue={student.quizzes.quiz1}
-                />
-                <input
-                  className="gradingSheetCell"
-                  type="number"
-                  defaultValue={student.quizzes.quiz2}
-                />
-                <input
-                  className="gradingSheetCell"
-                  type="number"
-                  defaultValue={student.quizzes.quiz3}
-                />
-                <input
-                  className="gradingSheetCell"
-                  type="number"
-                  defaultValue={student.quizzes.quiz4}
-                />
-                <input
-                  className="gradingSheetCell"
-                  type="number"
-                  defaultValue={student.quizzes.quiz5}
-                />
+                {(() => {
+                  const inputs = [];
+                  for (let i = 1; i <= 5; i++) {
+                    inputs.push(
+                      <GradeCell
+                        key={`quiz${i}`}
+                        value={student.quizzes[`quiz${i}`]}
+                      />
+                    );
+                  }
+                  return inputs;
+                })()}
               </div>
               <div className="grid grid-cols-3 text-center">
-                <input
-                  className="gradingSheetCell"
-                  type="number"
-                  defaultValue={student.labScores.lab1}
-                />
-                <input
-                  className="gradingSheetCell"
-                  type="number"
-                  defaultValue={student.labScores.lab2}
-                />
-                <input
-                  className="gradingSheetCell"
-                  type="number"
-                  defaultValue={student.labScores.lab3}
-                />
+                {(() => {
+                  const inputs = [];
+                  for (let i = 1; i <= 3; i++) {
+                    inputs.push(
+                      <GradeCell
+                        key={`lab${i}`}
+                        value={student.labScores[`lab${i}`]}
+                      />
+                    );
+                  }
+                  return inputs;
+                })()}
               </div>
-              <input
-                className="gradingSheetCell"
-                type="number"
-                defaultValue={student.project}
-              />
-              <input
-                className="gradingSheetCell"
-                type="number"
-                defaultValue={student.finalExam}
-              />
-              <input
-                className="gradingSheetCell"
-                type="number"
-                defaultValue={student.finalExam}
-              />
+              <GradeCell value={student.project} />
+              <GradeCell value={student.finalExam} />
+              <GradeCell value={student.finalExam} />
             </div>
           );
         })

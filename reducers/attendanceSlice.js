@@ -1,11 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "config/firebase";
+import { db } from "../config/firebase";
 
 const initialState = {
   loading: false,
   attendance: {},
+  dates: [],
+  documentId: "",
   error: "",
 };
 
@@ -13,10 +15,14 @@ export const fetchAttendance = createAsyncThunk(
   "attendance/fetchAttendance",
   async (classId) => {
     try {
-      const data = await getDocs(collection(db, `Classes/${classId}/Students`));
+      const data = await getDocs(
+        collection(db, `Classes/${classId}/Attendance`)
+      );
       const students = data.docs.map((doc) => {
-        const { attendance } = doc.data();
-        return { attendance };
+        const attendanceData = doc.data();
+        const documentId = doc.id;
+        console.log({ ...attendanceData, documentId });
+        return { ...attendanceData, documentId };
       });
       return students;
     } catch (error) {
@@ -28,14 +34,6 @@ export const fetchAttendance = createAsyncThunk(
 const attendanceSlice = createSlice({
   name: "attendance",
   initialState,
-  reducers: {
-    editAttendance: (state, action) => {
-      state.attendance = {
-        ...state.attendance,
-        [action.payload.date]: action.payload.mark,
-      };
-    },
-  },
   extraReducers: (builder) => {
     builder.addCase(fetchAttendance.pending, (state) => {
       state.loading = true;
@@ -43,7 +41,9 @@ const attendanceSlice = createSlice({
     });
     builder.addCase(fetchAttendance.fulfilled, (state, action) => {
       state.loading = false;
-      state.attendance = action.payload.attendance;
+      state.attendance = action.payload.students[0].attendanceState;
+      state.dates = action.payload.students[0].dateState;
+      state.documentId = action.payload.students[0].documentId;
     });
     builder.addCase(fetchAttendance.rejected, (state, action) => {
       state.loading = false;
@@ -52,5 +52,4 @@ const attendanceSlice = createSlice({
   },
 });
 
-export const { editAttendance } = attendanceSlice.actions;
 export default attendanceSlice.reducer;

@@ -25,17 +25,38 @@
   scrollbar-color: rgb(223, 223, 223) #ffffff;
 }
 
+input[type="date"] {
+  padding: 2px;
+}
+
+input[type="date"]:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   appearance: none;
 }
 
+@media print {
+  * {
+    overflow: visible !important;
+  }
+  body {
+    overflow: visible !important;
+  }
+  .header,
+  .sidebar {
+    display: none;
+  }
+}
+
 @layer components {
   .gradingSheetCell {
     @apply py-4 text-center bg-inherit border-l border-b border-b-black border-l-black;
   }
-  
 }
 
 @layer base {

@@ -1,9 +1,9 @@
-const GradeCell = ({ value, key }) => {
+const GradeCell = ({ value, key, className }) => {
   return (
     <input
       key={key}
       type="number"
-      className="gradingSheetCell"
+      className={`gradingSheetCell ${className}`}
       defaultValue={value}
     />
   );

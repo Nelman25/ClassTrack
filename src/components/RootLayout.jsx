@@ -4,13 +4,13 @@ import Sidebar from "./Sidebar";
 
 const RootLayout = () => {
   return (
-    <>
+    <div className="max-h-screen overflow-y-hidden">
       <Header />
-      <main className="flex mx-auto ">
+      <main className="flex mx-auto">
         <Sidebar />
         <Outlet />
       </main>
-    </>
+    </div>
   );
 };
 

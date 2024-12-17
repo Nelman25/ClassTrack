@@ -30,7 +30,7 @@ const ClassCard = () => {
 
   return (
     <div>
-      <div className="max-w-[1440px] mx-auto mt-6 flex py-2 border-b-2 border-b-slate-300 justify-between">
+      <div className="max-w-[1440px] overflow-y-auto mx-auto mt-6 flex py-2 border-b-2 border-b-slate-300 justify-between">
         <h2 className="text-4xl font-montserrat font-medium text-slate-700">
           My Classes
         </h2>
@@ -39,18 +39,20 @@ const ClassCard = () => {
       {loading ? (
         <Loading size={10} />
       ) : (
-        <div className="max-w-[1440px] px-8 font-montserrat mx-auto grid grid-cols-[repeat(auto-fit,minmax(400px,1fr))] gap-10 mt-6">
+        <div className="max-w-[1440px] max-h-[40rem] thin-scrollbar overflow-y-auto px-8 font-montserrat mx-auto grid grid-cols-[repeat(auto-fit,minmax(400px,1fr))] gap-10 mt-6">
           {classes.map((Class) => {
             return (
               <div
                 onClick={() => handleSelectClass(Class.id)}
                 key={Class.id}
-                className="rounded-xl h-[300px] p-8 border border-slate-700 flex flex-col justify-center items-center text-center odd:text-slate-200 odd:bg-[#2E2EA1] even:bg-yellow-500"
+                className="rounded-xl h-[300px] p-8 border border-slate-700 flex flex-col justify-center items-center text-center odd:text-slate-100 odd:bg-[#2E2EA1] even:bg-yellow-500"
               >
-                <h2 className="font-semibold text-3xl">{Class.subject}</h2>
-                <p className="text-2xl font-medium">{Class.section}</p>
-                <p className="text-xl">{Class.classSize} members</p>
-                <p className="text-xl">{Class.schedule}</p>
+                <h2 className="font-bold text-2xl">{Class.subject}</h2>
+                <p className="text-xl font-medium mt-2">{Class.section}</p>
+                <p className="text-lg mt-4">
+                  <strong>{Class.classSize}</strong> students
+                </p>
+                <p className="text-base mt-2 w-[250px]">{Class.schedule}</p>
               </div>
             );
           })}

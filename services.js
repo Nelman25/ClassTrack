@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "./config/firebase";
 
 export const createClass = async (newClass) => {
@@ -17,6 +17,7 @@ export const addStudentToDB = async (newStudent, classId) => {
       newStudent
     );
     console.log("Student added with ID : ", docRef.id);
+    updateClassSize(classId);
   } catch (error) {
     console.error(error);
   }
@@ -27,6 +28,20 @@ export const saveAttendanceToDB = async (attendanceData, classId, docId) => {
   try {
     const data = await updateDoc(docRef, attendanceData);
     console.log("Attendance saved! :", docRef.id);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const updateClassSize = async (classId) => {
+  try {
+    const docRef = doc(db, "Classes", classId);
+    const docSnap = await getDoc(docRef);
+    const selectedClass = docSnap.data();
+    console.log(selectedClass);
+    await updateDoc(docRef, {
+      classSize: selectedClass.classSize + 1,
+    });
   } catch (error) {
     console.error(error);
   }

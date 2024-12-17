@@ -11,7 +11,7 @@ import { fetchAttendance } from "../../reducers/attendanceSlice";
 const AttendanceSheet = () => {
   const { classId } = useParams();
   const dispatch = useDispatch();
-  
+
   const students = useSelector((state) => state.students.students);
   const attendance = useSelector((state) => state.attendance.attendance);
   const dates = useSelector((state) => state.attendance.dates);
@@ -19,7 +19,7 @@ const AttendanceSheet = () => {
   const loading = useSelector((state) => state.students.loading);
 
   const [datesState, setDates] = useState(Array(30).fill(""));
-  const [attendanceState,  setAttendance] = useState({});
+  const [attendanceState, setAttendance] = useState({});
 
   useEffect(() => {
     dispatch(fetchStudents(classId));
@@ -67,6 +67,14 @@ const AttendanceSheet = () => {
     saveAttendanceToDB(attendanceData, classId);
   };
 
+  if (classId === "undefined") {
+    return (
+      <div className="h-screen w-full content-center text-center text-5xl font-thin tracking-widest">
+        No class selected.
+      </div>
+    );
+  }
+
   return (
     <div className="max-h-[50rem] max-w-[105rem] overflow-y-auto overflow-x-auto thin-scrollbar">
       <>
@@ -81,7 +89,7 @@ const AttendanceSheet = () => {
               value={datesState[index]}
               onChange={(e) => handleDateChange(index, e.target.value)}
               className="border-b border-b-slate-300 border-r border-r-slate-300 p-1 text-center bg-[#343497] text-white"
-            />  
+            />
           ))}
         </header>
         {loading ? (
@@ -94,7 +102,7 @@ const AttendanceSheet = () => {
                 className="grid grid-cols-[repeat(33,120px)] indent-3"
               >
                 <p
-                  className={`text-sm border-b border-b-slate-300 col-span-2 py-2 border-r border-r-slate-300 sticky left-0 ${
+                  className={`text-sm border-b border-b-slate-300 col-span-2 py-2 border-r border-r-slate-300 sticky left-0 font-montserrat ${
                     index % 2 === 0 ? "bg-blue-100" : "bg-white"
                   }`}
                 >

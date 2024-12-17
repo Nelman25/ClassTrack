@@ -8,9 +8,9 @@ const GradingSheet = () => {
   const loading = useSelector((state) => state.students.loading);
 
   return (
-    <div className="h-[54rem] max-w-[105rem] overflow-x-scroll thin-scrollbar font-montserrat">
-      <header className="bg-[#2b2b8f] sticky top-0">
-        <ul className="grid grid-cols-[1fr_2fr_1fr_1fr_1fr_1fr] items-center text-center text-white text-lg font-montserrat font-semibold">
+    <div className="h-[54rem] overflow-x-auto thin-scrollbar font-montserrat">
+      <header className="bg-[#2b2b8f] sticky top-0 w-full">
+        <ul className="grid grid-cols-[240px_480px_240px_240px_240px_240px] max-xl:grid-cols-[180px_360px_180px_180px_180px_180px] w-full items-center text-center text-white text-lg font-montserrat font-semibold">
           {gradeCategories.map((category) => (
             <li key={category} className="py-2 border-l">
               {category}
@@ -25,12 +25,12 @@ const GradingSheet = () => {
           return (
             <div
               key={student.studentNumber}
-              className="grid grid-cols-[1fr_2fr_1fr_1fr_1fr_1fr] even:bg-blue-100 odd:bg-white"
+              className="grid grid-cols-[240px_480px_240px_240px_240px_240px] max-xl:grid-cols-[180px_360px_180px_180px_180px_180px] even:bg-blue-100 odd:bg-white"
             >
-              <p className="px-2 py-4 text-sm font-medium border-b border-b-black">
+              <p className="px-2 py-4 text-sm border-b border-b-slate-300 max-w-[240px] max-xl:max-w-[180px]">
                 {student.name}
               </p>
-              <div className="grid grid-cols-5 text-center">
+              <div className="grid grid-cols-5 text-center min-w-[480px] max-xl:min-w-[360px]">
                 {(() => {
                   const inputs = [];
                   for (let i = 1; i <= 5; i++) {
@@ -44,7 +44,7 @@ const GradingSheet = () => {
                   return inputs;
                 })()}
               </div>
-              <div className="grid grid-cols-3 text-center">
+              <div className="grid grid-cols-3 text-center min-w-[240px] max-xl:min-w-[180px]">
                 {(() => {
                   const inputs = [];
                   for (let i = 1; i <= 3; i++) {
@@ -52,15 +52,16 @@ const GradingSheet = () => {
                       <GradeCell
                         key={`lab${i}`}
                         value={student.labScores[`lab${i}`]}
+                        className=""
                       />
                     );
                   }
                   return inputs;
                 })()}
               </div>
-              <GradeCell value={student.project} />
-              <GradeCell value={student.finalExam} />
-              <GradeCell value={student.finalExam} />
+              <GradeCell value={student.project} className="" />
+              <GradeCell value={student.finalExam} className="" />
+              <GradeCell value={student.finalExam} className="" />
             </div>
           );
         })

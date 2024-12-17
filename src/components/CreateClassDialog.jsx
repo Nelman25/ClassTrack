@@ -21,7 +21,7 @@ export function CreateClassDialog() {
     const form = e.target;
     const formData = new FormData(form);
     const newClass = Object.fromEntries(formData.entries());
-    createClass(newClass);
+    createClass({ ...newClass, classSize: 0 });
 
     setModalOpen(false);
   };

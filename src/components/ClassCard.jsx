@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { setSelectedClass } from "../../reducers/userActivitySlice";
 import { subscribeToClasses } from "../../reducers/classSlice";
 import { fetchStudents } from "../../reducers/studentSlice";
+import { fetchGrades } from "../../reducers/gradesSlice";
 import CreateClassDialog from "./CreateClassDialog";
 
 const ClassCard = () => {
@@ -23,9 +24,12 @@ const ClassCard = () => {
   }, [dispatch]);
 
   const handleSelectClass = (classId) => {
-    dispatch(setSelectedClass(classId));
+    const selectedClass = classes.find((classItem) => classItem.id === classId);
+    dispatch(setSelectedClass(selectedClass));
     dispatch(fetchStudents(classId));
+    dispatch(fetchGrades(classId));
     navigate(`/masterlist/${classId}`);
+
   };
 
   return (

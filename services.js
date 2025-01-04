@@ -46,3 +46,17 @@ const updateClassSize = async (classId) => {
     console.error(error);
   }
 };
+
+export const updateGradesToDB = async (changes, classId) => {
+  try {
+    await Promise.all(
+      changes.map(async (change) => {
+        const docRef = doc(db, "Classes", classId, "Students", change.docId);
+        await updateDoc(docRef, change);
+        console.log("Student data successfully updated");
+      })
+    );
+  } catch (error) {
+    console.error(error);
+  }
+};

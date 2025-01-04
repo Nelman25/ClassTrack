@@ -4,6 +4,8 @@ import Masterlist from "./components/Masterlist";
 import GradingSheet from "./components/GradingSheet";
 import Dashboard from "./components/Dashboard";
 import AttendanceSheet from "./components/AttendanceSheet";
+import Signin from "./pages/Signin";
+import Signup from "./pages/Signup";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +21,8 @@ const router = createBrowserRouter([
     path: "/dashboard",
     element: <Dashboard />,
   },
+  { path: "/login", element: <Signin /> },
+  { path: "/signup", element: <Signup /> },
 ]);
 
 const App = () => {

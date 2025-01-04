@@ -16,7 +16,7 @@ export const fetchStudents = createAsyncThunk(
       const data = await getDocs(collection(db, `Classes/${classId}/Students`));
       const students = data.docs.map((doc) => {
         const studentInfo = doc.data();
-        return { ...studentInfo };
+        return { ...studentInfo, docId: doc.id };
       });
       return students;
     } catch (error) {
@@ -51,15 +51,3 @@ const studentSlice = createSlice({
 
 export const { addStudent } = studentSlice.actions;
 export default studentSlice.reducer;
-
-// TODO: Ifetch nalang lahat ng student info ng isang class, let's say ang napili is
-//       Information Management COM231, ang students ng Information Management COM231 lang ang mafefetch kasama yung mga grades and shi.
-//       para magawa yun:
-
-//      1. Dapat malaman natin kung ano yung class na pinili ni user.
-//      2. Siguro thru getting the class id when a class was selected sa Dashboard.
-//      3. After makuha yung section id, tsaka tayo gagawa ng getDocs request gamit tong
-//         query na to => getDocs("Sections", selectedSectionId, "Students");
-//      4. Dahil sa case na to, gagamitan ko nalang sya ng service functions
-
-// MAIN TODO: BUOHIN MUNA YUNG BAGONG MODEL NG STUDENT STATE

@@ -3,6 +3,7 @@ import studentSlice from "./reducers/studentSlice";
 import classSlice from "./reducers/classSlice";
 import userActivitySlice from "./reducers/userActivitySlice";
 import attendanceSlice from "./reducers/attendanceSlice";
+import userSlice from "./reducers/userSlice";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     students: studentSlice,
     userActivity: userActivitySlice,
     attendance: attendanceSlice,
+    users: userSlice,
   },
 });
 

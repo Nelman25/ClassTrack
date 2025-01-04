@@ -26,7 +26,7 @@ export const addStudentToDB = async (newStudent, classId) => {
 export const saveAttendanceToDB = async (attendanceData, classId, docId) => {
   const docRef = doc(db, `Classes/${classId}/Attendance/${docId}`);
   try {
-    const data = await updateDoc(docRef, attendanceData);
+    await updateDoc(docRef, attendanceData);
     console.log("Attendance saved! :", docRef.id);
   } catch (error) {
     console.error(error);
@@ -58,5 +58,15 @@ export const updateGradesToDB = async (changes, classId) => {
     );
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const updateAttendanceToDB = async (classId, dates, records) => {
+  try {
+    const docRef = doc(db, "Classes", classId);
+    await updateDoc(docRef, { records, dates });
+    console.log("Successfully updated attendance!");
+  } catch (err) {
+    console.error(err);
   }
 };

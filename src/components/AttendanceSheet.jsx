@@ -1,146 +1,143 @@
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchStudents } from "../../reducers/studentSlice";
-import { saveAttendanceToDB } from "../../services";
-import Loading from "./Loading";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../config/firebase";
-import { fetchAttendance } from "../../reducers/attendanceSlice";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { updateAttendanceToDB } from "../../services";
+import Swal from "sweetalert2";
 
 const AttendanceSheet = () => {
-  const { classId } = useParams();
-  const dispatch = useDispatch();
+  const { id, subject, section, records, dates } = useSelector(
+    (state) => state.userActivity.classData
+  );
+  const [datesState, setDates] = useState(dates || Array(1).fill(""));
+  const [attendance, setAttendance] = useState(records || {});
 
   const students = useSelector((state) => state.students.students);
-  const attendance = useSelector((state) => state.attendance.attendance);
-  const dates = useSelector((state) => state.attendance.dates);
-  const documentId = useSelector((state) => state.attendance.documentId);
-  const loading = useSelector((state) => state.students.loading);
 
-  const [datesState, setDates] = useState(Array(30).fill(""));
-  const [attendanceState, setAttendance] = useState({});
-
-  useEffect(() => {
-    dispatch(fetchStudents(classId));
-    dispatch(fetchAttendance(classId));
-  }, [dispatch, classId]);
-
+  console.log(datesState);
   console.log(attendance);
-  console.log(dates);
-  console.log(documentId);
-
-  const getAttendance = async () => {
-    const response = await getDocs(
-      collection(db, `Classes/${classId}/Attendance`)
-    );
-    const data = response.docs.map((doc) => {
-      const attendance = doc.data();
-      const docId = doc.id;
-      return { ...attendance, docId };
-    });
-
-    console.log(data[0].datesState);
-    console.log(data[0].attendanceState);
-    console.log(data[0].docId);
+  const addDate = () => {
+    setDates([...datesState, ""]);
   };
 
-  const handleDateChange = (columnIndex, value) => {
-    const updatedDates = [...datesState];
-    updatedDates[columnIndex] = value;
-    setDates(updatedDates);
+  const updateDate = (index, value) => {
+    const newDates = [...datesState];
+    newDates[index] = value;
+    setDates(newDates);
   };
 
-  const handleAttendanceChange = (studentId, columnIndex, value) => {
-    const dataKey = datesState[columnIndex] || `Column-${columnIndex}`;
+  const updateAttendance = (studentId, date, status) => {
     setAttendance((prev) => ({
       ...prev,
-      [studentId]: {
-        ...prev[studentId],
-        [dataKey]: value,
-      },
+      [`${studentId}-${date}`]: status,
     }));
   };
 
-  const handleSave = () => {
-    const attendanceData = { datesState, attendanceState };
-    saveAttendanceToDB(attendanceData, classId);
+  const getAttendance = (studentId, date) => {
+    return attendance[`${studentId}-${date}`] || "";
   };
 
-  if (classId === "undefined") {
-    return (
-      <div className="h-screen w-full content-center text-center text-5xl font-thin tracking-widest">
-        No class selected.
-      </div>
-    );
-  }
+  const handleSaveChanges = async () => {
+    try {
+      await updateAttendanceToDB(id, datesState, attendance);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Your work has been saved",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
-    <div className="max-h-[50rem] max-w-[105rem] overflow-y-auto overflow-x-auto thin-scrollbar">
-      <>
-        <header className="grid grid-cols-[repeat(33,120px)] w-full bg-[#2b2b8f] h-[3rem]">
-          <p className="text-white text-lg col-span-2 indent-3 font-medium flex items-center bg-[#2b2b8f] border-b border-b-slate-300 border-r border-r-slate-300 sticky left-0">
-            Student name
-          </p>
-          {Array.from({ length: 30 }).map((_, index) => (
-            <input
-              key={index}
-              type="date"
-              value={datesState[index]}
-              onChange={(e) => handleDateChange(index, e.target.value)}
-              className="border-b border-b-slate-300 border-r border-r-slate-300 p-1 text-center bg-[#343497] text-white"
-            />
-          ))}
-        </header>
-        {loading ? (
-          <Loading />
-        ) : (
-          students.map((student, index) => {
-            return (
-              <div
-                key={student.studentNumber}
-                className="grid grid-cols-[repeat(33,120px)] indent-3"
-              >
-                <p
-                  className={`text-sm border-b border-b-slate-300 col-span-2 py-2 border-r border-r-slate-300 sticky left-0 font-montserrat ${
-                    index % 2 === 0 ? "bg-blue-100" : "bg-white"
-                  }`}
-                >
-                  {student.name}
-                </p>
-                {Array.from({ length: 30 }).map((_, index) => (
-                  <input
+    <Card className="w-full max-h-[50rem] overflow-y-auto thin-scrollbar">
+      <CardHeader>
+        <CardTitle>
+          {subject} - {section}
+        </CardTitle>
+        <button
+          onClick={handleSaveChanges}
+          className="bg-[#5CB85C] py-2 px-4 my-2 text-[#FFFAEC] text-lg rounded-sm hover:bg-[#1f691f]"
+        >
+          Save changes
+        </button>
+      </CardHeader>
+      <CardContent>
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse">
+            <thead>
+              <tr>
+                <th className="p-2 border min-w-56 bg-[#34418E] text-white">
+                  Student Name
+                </th>
+                {datesState.map((date, index) => (
+                  <th
                     key={index}
-                    type="text"
-                    value={
-                      (attendanceState[student.studentNumber] &&
-                        attendanceState[student.studentNumber][
-                          datesState[index]
-                        ]) ||
-                      ""
-                    }
-                    onChange={(e) =>
-                      handleAttendanceChange(
-                        student.studentNumber,
-                        index,
-                        e.target.value
-                      )
-                    }
-                    className="border-b border-b-slate-300 border-r border-r-slate-300 p-1 text-center"
-                  />
+                    className="p-2 border bg-[#34418E] text-white"
+                  >
+                    <Input
+                      type="date"
+                      value={date}
+                      onChange={(e) => updateDate(index, e.target.value)}
+                      className="w-full border-none"
+                    />
+                  </th>
                 ))}
-              </div>
-            );
-          })
-        )}
-      </>
-      <button
-        className="bg-green-300 px-4 py-2 rounded-sm "
-        onClick={getAttendance}
-      >
-        Save
-      </button>
-    </div>
+                <th className="p-2 border-r border-b border-r-slate-400 border-b-slate-400">
+                  <Button onClick={addDate} className="w-full">
+                    Add Date
+                  </Button>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {students.map((student) => (
+                <tr key={student.id} className="even:bg-white odd:bg-blue-50">
+                  <td className="p-2 border-r border-b border-r-slate-400 border-b-slate-400">
+                    {student.name}
+                  </td>
+                  {datesState.map((date, index) => (
+                    <td
+                      key={index}
+                      className="p-2 border-r border-b border-r-slate-400 border-b-slate-400"
+                    >
+                      <Select
+                        value={getAttendance(student.studentNumber, date)}
+                        onValueChange={(value) =>
+                          updateAttendance(student.studentNumber, date, value)
+                        }
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="present">Present</SelectItem>
+                          <SelectItem value="absent">Absent</SelectItem>
+                          <SelectItem value="late">Late</SelectItem>
+                          <SelectItem value="excused">Excused</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </td>
+                  ))}
+                  <td className="p-2 border"></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 

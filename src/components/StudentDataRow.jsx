@@ -7,12 +7,11 @@ import {
   getQuizPercentage,
 } from "@/lib/helpers";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setGradesChanges } from "../../reducers/userActivitySlice";
 
 const StudentDataRow = ({ student }) => {
   const dispatch = useDispatch();
-  const changes = useSelector((state) => state.userActivity.gradesChanges);
   const { name, quizzes, labScores, project, finalExam, docId } = student;
   const [studentData, setStudentData] = useState({
     name,
@@ -80,8 +79,6 @@ const StudentDataRow = ({ student }) => {
       return updatedStudentData;
     });
   };
-
-  console.log(changes);
 
   return (
     <tr className="bg-white text-center h-12 odd:bg-white even:bg-blue-100">

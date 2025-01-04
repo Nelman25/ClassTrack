@@ -11,9 +11,9 @@ const Masterlist = () => {
   );
 
   return (
-    <div className="w-full overflow-y-auto max-h-[52rem] thin-scrollbar border border-[##e4e4e7] rounded-lg p-4 m-4 mt-0 shadow-xl">
+    <div className="w-full overflow-y-auto max-h-[52rem] thin-scrollbar border border-[##e4e4e7] rounded-lg p-4 m-4 mt-0 shadow">
       <h1 className="text-xl font-medium p-4">
-        {subject} - {section}
+        {subject && section ? `${subject} - ${section}` : `No class selected.`}
       </h1>
       <div className="w-full bg-slate-50 overflow-x-auto thin-scrollbar font-montserrat relative">
         <header className="w-full bg-[#34418E] sticky top-0">

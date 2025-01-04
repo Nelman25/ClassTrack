@@ -1,8 +1,11 @@
 import nuLogo from "../assets/NU_shield.png";
-import profile from "../assets/FormalPic200x200.jpg";
+import defaultProfile from "../assets/defaultProfile.jpg";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+  const { name } = useSelector((state) => state.users);
+
   return (
     <header className="flex justify-between bg-[#34418E] px-8 py-2 font-montserrat border-b-4 border-b-[#FFD51D] header">
       <Link to="/dashboard">
@@ -19,11 +22,11 @@ const Header = () => {
       </Link>
       <div className="flex items-center max-w-[]">
         <img
-          src={profile}
+          src={defaultProfile}
           alt="user profile picture"
           className="rounded-full size-8 mr-2"
         />
-        <p className="text-white text-sm">Jonel Villaver</p>
+        <p className="text-white text-sm">{name ? name : "Guest"}</p>
       </div>
     </header>
   );

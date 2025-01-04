@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../config/firebase";
 
-const classCollectionRef = collection(db, "Classes");
 
 const initialState = {
   loading: false,
@@ -31,17 +30,20 @@ const classSlice = createSlice({
 
 export const { startLoading, setClasses, setError } = classSlice.actions;
 
-export const subscribeToClasses = () => (dispatch) => {
+export const subscribeToClasses = (uid) => (dispatch) => {
   try {
     dispatch(startLoading());
 
-    const unsubscribe = onSnapshot(classCollectionRef, (snapshot) => {
-      const classes = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      dispatch(setClasses(classes));
-    });
+    const unsubscribe = onSnapshot(
+      collection(db, "Users", uid, "Classes"),
+      (snapshot) => {
+        const classes = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        dispatch(setClasses(classes));
+      }
+    );
     (error) => {
       console.error("Error fetching classes", error);
       dispatch(setError(error.message || "Failed to classes."));
@@ -54,4 +56,3 @@ export const subscribeToClasses = () => (dispatch) => {
 };
 
 export default classSlice.reducer;
-

@@ -11,9 +11,11 @@ const initialState = {
 
 export const fetchStudents = createAsyncThunk(
   "students/fetchStudents",
-  async (classId) => {
+  async ({ classId, uid }) => {
     try {
-      const data = await getDocs(collection(db, `Classes/${classId}/Students`));
+      const data = await getDocs(
+        collection(db, "Users", uid, "Classes", classId, "Students")
+      );
       const students = data.docs.map((doc) => {
         const studentInfo = doc.data();
         return { ...studentInfo, docId: doc.id };
@@ -21,6 +23,7 @@ export const fetchStudents = createAsyncThunk(
       return students;
     } catch (error) {
       console.error(error);
+      throw error;
     }
   }
 );

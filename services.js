@@ -1,23 +1,21 @@
 import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
-import { db } from "./config/firebase";
+import { auth, db } from "./config/firebase";
 
-export const createClass = async (newClass) => {
+export const createClass = async (newClass, uid) => {
   try {
-    const docRef = await addDoc(collection(db, "Classes"), newClass);
-    console.log("Class added with ID: ", docRef.id);
+    await addDoc(collection(db, "Users", uid, "Classes"), newClass);
   } catch (error) {
     console.error(error);
   }
 };
 
-export const addStudentToDB = async (newStudent, classId) => {
+export const addStudentToDB = async (newStudent, classId, uid) => {
   try {
-    const docRef = await addDoc(
-      collection(db, `Classes/${classId}/Students`),
+    await addDoc(
+      collection(db, "Users", uid, "Classes", classId, "Students"),
       newStudent
     );
-    console.log("Student added with ID : ", docRef.id);
-    updateClassSize(classId);
+    updateClassSize(uid, classId);
   } catch (error) {
     console.error(error);
   }
@@ -33,9 +31,9 @@ export const saveAttendanceToDB = async (attendanceData, classId, docId) => {
   }
 };
 
-const updateClassSize = async (classId) => {
+const updateClassSize = async (uid, classId) => {
   try {
-    const docRef = doc(db, "Classes", classId);
+    const docRef = doc(db, "Users", uid, "Classes", classId);
     const docSnap = await getDoc(docRef);
     const selectedClass = docSnap.data();
     console.log(selectedClass);
@@ -47,11 +45,19 @@ const updateClassSize = async (classId) => {
   }
 };
 
-export const updateGradesToDB = async (changes, classId) => {
+export const updateGradesToDB = async (changes, classId, uid) => {
   try {
     await Promise.all(
       changes.map(async (change) => {
-        const docRef = doc(db, "Classes", classId, "Students", change.docId);
+        const docRef = doc(
+          db,
+          "Users",
+          uid,
+          "Classes",
+          classId,
+          "Students",
+          change.docId
+        );
         await updateDoc(docRef, change);
         console.log("Student data successfully updated");
       })
@@ -61,12 +67,26 @@ export const updateGradesToDB = async (changes, classId) => {
   }
 };
 
-export const updateAttendanceToDB = async (classId, dates, records) => {
+export const updateAttendanceToDB = async (uid, classId, dates, records) => {
   try {
-    const docRef = doc(db, "Classes", classId);
+    const docRef = doc(db, "Users", uid, "Classes", classId);
     await updateDoc(docRef, { records, dates });
     console.log("Successfully updated attendance!");
   } catch (err) {
     console.error(err);
+  }
+};
+
+export const fetchUser = async () => {
+  const user = auth.currentUser;
+  if (!user) throw new Error("No user logged in.");
+
+  const docRef = doc(db, "Users", user.uid);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    return docSnap.data();
+  } else {
+    throw new Error("User document not found.");
   }
 };

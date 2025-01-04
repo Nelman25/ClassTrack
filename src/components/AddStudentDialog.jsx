@@ -18,9 +18,8 @@ import { useState } from "react";
 export function AddStudentDialog() {
   const [isModalOpen, setModalOpen] = useState(false);
   const dispatch = useDispatch();
-  const selectedClassId = useSelector(
-    (state) => state.userActivity.selectedClassId
-  );
+  const { id } = useSelector((state) => state.userActivity.classData);
+  const uid = useSelector((state) => state.users.uid);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -46,7 +45,7 @@ export function AddStudentDialog() {
     const data = Object.fromEntries(formData.entries());
     const newStudent = { ...data, ...gradesTemplate };
 
-    addStudentToDB(newStudent, selectedClassId);
+    addStudentToDB(newStudent, id, uid);
     dispatch(addStudent(newStudent));
     setModalOpen(false);
   };

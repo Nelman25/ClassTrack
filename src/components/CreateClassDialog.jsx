@@ -12,16 +12,18 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createClass } from "../../services";
+import { useSelector } from "react-redux";
 
 export function CreateClassDialog() {
   const [isModalOpen, setModalOpen] = useState(false);
+  const uid = useSelector((state) => state.users.uid);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
     const newClass = Object.fromEntries(formData.entries());
-    createClass({ ...newClass, classSize: 0 });
+    createClass({ ...newClass, classSize: 0 }, uid);
 
     setModalOpen(false);
   };

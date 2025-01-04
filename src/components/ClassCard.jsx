@@ -9,23 +9,24 @@ import CreateClassDialog from "./CreateClassDialog";
 
 const ClassCard = () => {
   const { classes, loading } = useSelector((state) => state.classes);
+  const { uid } = useSelector((state) => state.users);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const unsubscribe = dispatch(subscribeToClasses());
+    const unsubscribe = dispatch(subscribeToClasses(uid));
 
     return () => {
       if (unsubscribe) {
         unsubscribe();
       }
     };
-  }, [dispatch]);
+  }, [dispatch, uid]);
 
-  const handleSelectClass = (classId) => {
+  const handleSelectClass = async (classId) => {
     const selectedClass = classes.find((classItem) => classItem.id === classId);
     dispatch(setSelectedClass(selectedClass));
-    dispatch(fetchStudents(classId));
+    await dispatch(fetchStudents({ classId, uid })).unwrap();
     navigate(`/masterlist/${classId}`);
   };
 
@@ -42,6 +43,7 @@ const ClassCard = () => {
       ) : (
         <div className="max-w-[1440px] max-h-[40rem] thin-scrollbar overflow-y-auto px-8 font-montserrat mx-auto grid grid-cols-[repeat(auto-fit,minmax(400px,1fr))] gap-10 mt-6">
           {classes.map((Class) => {
+            console.log(Class);
             return (
               <div
                 onClick={() => handleSelectClass(Class.id)}

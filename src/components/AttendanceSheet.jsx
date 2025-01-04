@@ -17,13 +17,12 @@ const AttendanceSheet = () => {
   const { id, subject, section, records, dates } = useSelector(
     (state) => state.userActivity.classData
   );
+  const { uid } = useSelector((state) => state.users);
   const [datesState, setDates] = useState(dates || Array(1).fill(""));
   const [attendance, setAttendance] = useState(records || {});
 
   const students = useSelector((state) => state.students.students);
 
-  console.log(datesState);
-  console.log(attendance);
   const addDate = () => {
     setDates([...datesState, ""]);
   };
@@ -47,7 +46,7 @@ const AttendanceSheet = () => {
 
   const handleSaveChanges = async () => {
     try {
-      await updateAttendanceToDB(id, datesState, attendance);
+      await updateAttendanceToDB(uid, id, datesState, attendance);
       Swal.fire({
         position: "center",
         icon: "success",
@@ -61,10 +60,12 @@ const AttendanceSheet = () => {
   };
 
   return (
-    <Card className="w-full max-h-[50rem] overflow-y-auto thin-scrollbar">
+    <Card className="w-full m-4 mt-0 p-4 max-h-[50rem] overflow-y-auto thin-scrollbar">
       <CardHeader>
         <CardTitle>
-          {subject} - {section}
+          {subject && section
+            ? `${subject} - ${section}`
+            : `No class selected.`}
         </CardTitle>
         <button
           onClick={handleSaveChanges}

@@ -10,10 +10,11 @@ const GradingSheet = () => {
   const { subject, section, id } = useSelector(
     (state) => state.userActivity.classData
   );
+  const { uid } = useSelector((state) => state.users);
 
   const handleSaveChanges = async () => {
     try {
-      await updateGradesToDB(changes, id);
+      await updateGradesToDB(changes, id, uid);
       Swal.fire({
         position: "center",
         icon: "success",
@@ -27,10 +28,12 @@ const GradingSheet = () => {
   };
 
   return (
-    <div className="w-full overflow-y-auto max-h-[52rem] thin-scrollbar border border-[##e4e4e7] rounded-lg p-4 m-4 mt-0 shadow-xl">
+    <div className="w-full overflow-y-auto max-h-[52rem] thin-scrollbar border border-[##e4e4e7] rounded-lg p-4 m-4 mt-0 shadow">
       <div className="flex justify-between items-center px-4">
         <h1 className="text-xl font-medium">
-          {subject} - {section}
+          {subject && section
+            ? `${subject} - ${section}`
+            : `No class selected.`}
         </h1>
         <button
           onClick={handleSaveChanges}

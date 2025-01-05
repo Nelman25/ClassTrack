@@ -1,12 +1,12 @@
 import Header from "./Header";
-import ClassCard from "./ClassCard";
+import ClassList from "./ClassList";
 
 const Dashboard = () => {
   return (
     <div>
       <Header />
       <main>
-        <ClassCard />
+        <ClassList />
       </main>
     </div>
   );

@@ -18,7 +18,7 @@ const CardHeader = React.forwardRef(({ className, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
-      "flex justify-between items-center space-y-1.5 px-4",
+      "flex justify-between items-center space-y-1.5 px-4 my-1",
       className
     )}
     {...props}
@@ -29,7 +29,10 @@ CardHeader.displayName = "CardHeader";
 const CardTitle = React.forwardRef(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("font-medium leading-none tracking-tight text-xl", className)}
+    className={cn(
+      "font-medium leading-none tracking-tight text-xl max-xl:text-base",
+      className
+    )}
     {...props}
   />
 ));

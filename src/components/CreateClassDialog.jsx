@@ -31,7 +31,7 @@ export function CreateClassDialog() {
   return (
     <Dialog open={isModalOpen} onOpenChange={setModalOpen}>
       <DialogTrigger asChild>
-        <Button className="text-2xl px-4 py-6 bg-green-200 text-black hover:bg-green-300">
+        <Button className="text-xl px-4 py-6 bg-[#5CB85C] text-[#FFFAEC] hover:bg-[#1f691f]">
           Create class
         </Button>
       </DialogTrigger>
@@ -94,7 +94,7 @@ export function CreateClassDialog() {
             </div>
           </div>
           <DialogFooter>
-            <Button className="bg-green-500 hover:bg-green-600" type="submit">
+            <Button className="bg-[#5CB85C] text-[#FFFAEC] hover:bg-[#1f691f]" type="submit">
               Create class
             </Button>
           </DialogFooter>

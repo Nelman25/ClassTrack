@@ -60,7 +60,7 @@ const AttendanceSheet = () => {
   };
 
   return (
-    <Card className="w-full m-4 mt-0 p-4 max-h-[50rem] overflow-y-auto thin-scrollbar">
+    <Card className="w-full m-4 mt-0 p-4 max-h-[50rem] overflow-y-auto thin-scrollbar max-xl:text-sm">
       <CardHeader>
         <CardTitle>
           {subject && section
@@ -69,7 +69,7 @@ const AttendanceSheet = () => {
         </CardTitle>
         <button
           onClick={handleSaveChanges}
-          className="bg-[#5CB85C] py-2 px-4 my-2 text-[#FFFAEC] text-lg rounded-sm hover:bg-[#1f691f]"
+          className="bg-[#5CB85C] py-2 px-4 my-2 text-[#FFFAEC] text-lg rounded-sm hover:bg-[#1f691f] max-xl:text-sm"
         >
           Save changes
         </button>

@@ -82,7 +82,7 @@ const StudentDataRow = ({ student }) => {
 
   return (
     <tr className="bg-white text-center h-12 odd:bg-white even:bg-blue-100">
-      <td className="gradeCell py-1 w-[300px] text-start indent-5">{name}</td>
+      <td className="gradeCell py-1 w-[300px] text-start">{name}</td>
       <td className="gradeCell">
         <input
           className="gradeInputCell"

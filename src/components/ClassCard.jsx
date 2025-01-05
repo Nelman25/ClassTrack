@@ -31,7 +31,7 @@ const ClassCard = () => {
   };
 
   return (
-    <div>
+    <>
       <div className="max-w-[1440px] overflow-y-auto mx-auto mt-6 flex py-2 border-b-2 border-b-slate-300 justify-between">
         <h2 className="text-4xl font-montserrat font-medium text-slate-700">
           My Classes
@@ -48,7 +48,7 @@ const ClassCard = () => {
               <div
                 onClick={() => handleSelectClass(Class.id)}
                 key={Class.id}
-                className="rounded-xl h-[300px] p-8 border border-slate-700 flex flex-col justify-center items-center text-center odd:text-slate-100 odd:bg-[#2E2EA1] even:bg-yellow-500"
+                className="rounded-xl h-[300px] p-8 border border-slate-700 flex flex-col justify-center items-center text-center odd:text-slate-100 odd:bg-[#2E2EA1] even:bg-yellow-500 hover:bg-opacity-90 transition ease-in-out delay-100"
               >
                 <h2 className="font-bold text-2xl">{Class.subject}</h2>
                 <p className="text-xl font-medium mt-2">{Class.section}</p>
@@ -61,7 +61,7 @@ const ClassCard = () => {
           })}
         </div>
       )}
-    </div>
+    </>
   );
 };
 

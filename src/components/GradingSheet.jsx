@@ -29,20 +29,20 @@ const GradingSheet = () => {
 
   return (
     <div className="w-full overflow-y-auto max-h-[52rem] thin-scrollbar border border-[##e4e4e7] rounded-lg p-4 m-4 mt-0 shadow">
-      <div className="flex justify-between items-center px-4">
-        <h1 className="text-xl font-medium">
+      <div className="flex justify-between items-center px-4 min-w-full">
+        <h1 className="text-xl font-medium max-xl:text-base">
           {subject && section
             ? `${subject} - ${section}`
             : `No class selected.`}
         </h1>
         <button
           onClick={handleSaveChanges}
-          className="bg-[#5CB85C] py-2 px-4 my-2 text-[#FFFAEC] text-lg rounded-sm hover:bg-[#1f691f]"
+          className="bg-[#5CB85C] py-2 px-4 my-2 text-[#FFFAEC] text-lg rounded-sm hover:bg-[#1f691f] max-xl:text-sm"
         >
           Save changes
         </button>
       </div>
-      <table className="w-full bg-slate-100 max-h-[10rem] overflow-x-auto">
+      <table className="w-full bg-slate-100 min-w-[1000px] max-w-[1600px] max-h-[10rem] overflow-x-auto">
         <thead>
           <tr className="bg-[#34418E] text-white">
             <th className="font-semibold py-2" colSpan={1}>

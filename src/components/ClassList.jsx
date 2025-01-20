@@ -1,8 +1,8 @@
 import Loading from "./Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setSelectedClass } from "../../reducers/userActivitySlice";
-import { fetchStudents } from "../../reducers/studentSlice";
+import { setSelectedClass } from "../reducers/userActivitySlice";
+import { fetchStudents } from "../reducers/studentSlice";
 import CreateClassDialog from "./CreateClassDialog";
 import ClassCard from "./ClassCard";
 import useClassManagement from "@/hooks/useClassManagement";

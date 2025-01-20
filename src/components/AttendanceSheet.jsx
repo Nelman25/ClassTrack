@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { updateAttendanceToDB } from "../../services";
+import { updateAttendanceToDB } from "../services";
 import Swal from "sweetalert2";
 
 const AttendanceSheet = () => {

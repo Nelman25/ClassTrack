@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { createClass } from "../../services";
+import { createClass } from "../services";
 import { useSelector } from "react-redux";
 
 export function CreateClassDialog() {
@@ -94,7 +94,10 @@ export function CreateClassDialog() {
             </div>
           </div>
           <DialogFooter>
-            <Button className="bg-[#5CB85C] text-[#FFFAEC] hover:bg-[#1f691f]" type="submit">
+            <Button
+              className="bg-[#5CB85C] text-[#FFFAEC] hover:bg-[#1f691f]"
+              type="submit"
+            >
               Create class
             </Button>
           </DialogFooter>

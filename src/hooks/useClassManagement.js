@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { subscribeToClasses } from "../../reducers/classSlice";
+import { subscribeToClasses } from "../reducers/classSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const useClassManagement = (uid) => {

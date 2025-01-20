@@ -4,8 +4,11 @@ import { TbEdit } from "react-icons/tb";
 import { MdSpaceDashboard } from "react-icons/md";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { CiLogout } from "react-icons/ci";
-import { auth } from "../../config/firebase";
+import { auth } from "../config/firebase";
 import { useEffect, useState } from "react";
+
+const TAB_CLASS =
+  "flex items-center gap-2 text-slate-700 text-lg w-full px-4 py-4 group hover:bg-[#4040a5] hover:text-white";
 
 const Sidebar = () => {
   const { classId } = useParams();
@@ -34,14 +37,14 @@ const Sidebar = () => {
       <nav>
         <ul className="min-w-[240px]">
           <Link to={`/dashboard`}>
-            <li className="flex items-center gap-2 text-slate-700 text-lg w-full px-4 py-4 group hover:bg-[#4040a5] hover:text-white">
+            <li className={TAB_CLASS}>
               <MdSpaceDashboard className="group-hover:text-white text-[#2E2EA1]" />
               Dashboard
             </li>
           </Link>
           <Link to={`/masterlist/${classId}`}>
             <li
-              className={`flex items-center gap-2 text-slate-700 text-lg w-full px-4 py-4 group hover:bg-[#4040a5] hover:text-white ${
+              className={`${TAB_CLASS} ${
                 active === "masterlist" && "bg-[#4040a5] text-white"
               }`}
             >
@@ -55,7 +58,7 @@ const Sidebar = () => {
           </Link>
           <Link to={`/gradingsheet/${classId}`}>
             <li
-              className={`flex items-center gap-2 text-slate-700 text-lg w-full px-4 py-4 group hover:bg-[#4040a5] hover:text-white ${
+              className={`${TAB_CLASS} ${
                 active === "gradingsheet" && "bg-[#4040a5] text-white"
               }`}
             >
@@ -69,7 +72,7 @@ const Sidebar = () => {
           </Link>
           <Link to={`attendancesheet/${classId}`}>
             <li
-              className={`flex items-center gap-2 text-slate-700 text-lg w-full px-4 py-4 group hover:bg-[#4040a5] hover:text-white ${
+              className={`${TAB_CLASS} ${
                 active === "attendancesheet" && "bg-[#4040a5] text-white"
               }`}
             >

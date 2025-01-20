@@ -5,10 +5,10 @@ import { IoEyeOff } from "react-icons/io5";
 import { IoEye } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../config/firebase";
-import { fetchUser } from "../../services";
+import { auth } from "../config/firebase";
+import { fetchUser } from "../services";
 import { useDispatch } from "react-redux";
-import { setUser } from "../../reducers/userSlice";
+import { setUser } from "../reducers/userSlice";
 
 const Signin = () => {
   const [showPassword, setShowPassword] = useState(false);

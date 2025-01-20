@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useSelector } from "react-redux";
 import StudentDataRow from "./StudentDataRow";
-import { updateGradesToDB } from "../../services";
+import { updateGradesToDB } from "../services";
 import Swal from "sweetalert2";
 
 const GradingSheet = () => {

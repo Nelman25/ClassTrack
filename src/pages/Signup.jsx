@@ -4,11 +4,11 @@ import { IoEyeOff } from "react-icons/io5";
 import { IoEye } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import nuLogo from "../assets/NU_shield.png";
-import { auth, db } from "../../config/firebase";
+import { auth, db } from "../config/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { useDispatch } from "react-redux";
-import { setUser } from "../../reducers/userSlice";
+import { setUser } from "../reducers/userSlice";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);

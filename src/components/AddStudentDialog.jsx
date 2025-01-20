@@ -11,8 +11,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useDispatch, useSelector } from "react-redux";
-import { addStudentToDB } from "../../services";
-import { addStudent } from "../../reducers/studentSlice";
+import { addStudentToDB } from "../services";
+import { addStudent } from "../reducers/studentSlice";
 import { useState } from "react";
 
 export function AddStudentDialog() {

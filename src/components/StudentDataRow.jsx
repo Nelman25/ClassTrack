@@ -8,7 +8,7 @@ import {
 } from "@/lib/helpers";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setGradesChanges } from "../../reducers/userActivitySlice";
+import { setGradesChanges } from "../reducers/userActivitySlice";
 
 const StudentDataRow = ({ student }) => {
   const dispatch = useDispatch();

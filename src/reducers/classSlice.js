@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../config/firebase";
 
-
 const initialState = {
   loading: false,
   classes: [],

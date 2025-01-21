@@ -2,21 +2,20 @@ import Loading from "./Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setSelectedClass } from "../reducers/userActivitySlice";
-import { fetchStudents } from "../reducers/studentSlice";
 import CreateClassDialog from "./CreateClassDialog";
 import ClassCard from "./ClassCard";
-import useClassManagement from "@/hooks/useClassManagement";
+import useFetchClasses from "@/hooks/useFetchClasses";
 
 const ClassList = () => {
   const { uid } = useSelector((state) => state.users);
-  const { classes, loading } = useClassManagement(uid);
+  const { classes, loading } = useFetchClasses(uid);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSelectClass = async (classId) => {
     const selectedClass = classes.find((classItem) => classItem.id === classId);
     dispatch(setSelectedClass(selectedClass));
-    await dispatch(fetchStudents({ classId, uid })).unwrap();
+    // await dispatch(fetchStudents({ classId, uid })).unwrap();
     navigate(`/masterlist/${classId}`);
   };
 

@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { studentFields } from "@/lib/constants";
 import AddStudentDialog from "./AddStudentDialog";
 import Loading from "./Loading";
+import useFetchStudents from "../hooks/useFetchStudents";
 
 const CELL_CLASSES = "py-2 min-w-[150px] truncate";
 const TABLE_GRID = "grid grid-cols-[2fr_3fr_1fr_1fr_4fr]";
@@ -42,11 +43,13 @@ const StudentRow = ({ student }) => {
 };
 
 const Masterlist = () => {
-  const students = useSelector((state) => state.students.students);
-  const loading = useSelector((state) => state.students.loading);
-  const { subject, section } = useSelector(
+  const { subject, section, id } = useSelector(
     (state) => state.userActivity.classData
   );
+  const { uid } = useSelector((state) => state.users);
+  console.log("id: ", id);
+  console.log("uid: ", uid);
+  const { students, loading } = useFetchStudents({ id, uid });
 
   return (
     <div className="w-full overflow-y-auto max-h-[52rem] thin-scrollbar border border-[##e4e4e7] rounded-lg p-4 m-4 mt-0 shadow">

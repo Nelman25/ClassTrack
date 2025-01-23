@@ -35,8 +35,6 @@ const Signin = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       const currentUser = await fetchUser();
-      console.log("User Successfully logged in!");
-      console.log(currentUser);
       dispatch(setUser(currentUser));
       navigate("/dashboard");
     } catch (err) {

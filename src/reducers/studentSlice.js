@@ -36,34 +36,64 @@ export const { addStudent, startLoading, setStudents, setError } =
 export const subscribeToStudents =
   ({ classId, uid }) =>
   (dispatch) => {
+    if (!uid || !classId) {
+      console.error("Missing uid or classId");
+      return () => {}; // Return empty cleanup function
+    }
+
     try {
       dispatch(startLoading());
 
-      const colRef = collection(
-        db,
-        "Users",
-        uid,
-        "Classes",
-        classId,
-        "Students"
+      const unsubscribe = onSnapshot(
+        collection(db, "Users", uid, "Classes", classId, "Students"),
+        (snapshot) => {
+          const students = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          dispatch(setStudents(students));
+        },
+        (error) => {
+          console.error("Error fetching students, ", error);
+        }
       );
 
-      const unsubscribe = onSnapshot(colRef, (snapshot) => {
-        const students = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        dispatch(setStudents(students));
-      });
-      (error) => {
-        console.error("Error fetching students", error);
-        dispatch(setError(error.message || "Failed to fetch students."));
-      };
       return unsubscribe;
     } catch (error) {
       console.error(error);
+      dispatch(setError(error.message || "Failed to fetch students."));
     }
   };
+
+export default studentSlice.reducer;
+
+// export const subscribeToStudents =
+//   ({ classId, uid }) =>
+//   (dispatch) => {
+//     try {
+//       dispatch(startLoading());
+
+//       const unsubscribe = onSnapshot(
+//         collection(db, "Users", uid, "Classes", classId, "Students"),
+//         (snapshot) => {
+//           const students = snapshot.docs.map((doc) => ({
+//             id: doc.id,
+//             ...doc.data(),
+//           }));
+//           dispatch(setStudents(students));
+//         },
+//         (error) => {
+//           console.error("Error fetching students", error);
+//           dispatch(setError(error.message || "Failed to fetch students."));
+//         }
+//       );
+
+//       return unsubscribe;
+//     } catch (error) {
+//       console.error(error);
+//       dispatch(setError(error.message || "Failed to fetch students."));
+//     }
+//   };
 
 // import { createSlice } from "@reduxjs/toolkit";
 // import { createAsyncThunk } from "@reduxjs/toolkit";
@@ -120,4 +150,3 @@ export const subscribeToStudents =
 // });
 
 // export const { addStudent } = studentSlice.actions;
-export default studentSlice.reducer;

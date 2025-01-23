@@ -14,8 +14,9 @@ const ClassList = () => {
 
   const handleSelectClass = async (classId) => {
     const selectedClass = classes.find((classItem) => classItem.id === classId);
+    localStorage.setItem("classId", classId);
+    localStorage.setItem("uid", uid);
     dispatch(setSelectedClass(selectedClass));
-    // await dispatch(fetchStudents({ classId, uid })).unwrap();
     navigate(`/masterlist/${classId}`);
   };
 

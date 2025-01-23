@@ -6,8 +6,10 @@ import Dashboard from "./components/Dashboard";
 import AttendanceSheet from "./components/AttendanceSheet";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
+import LandingPage from "./pages/LandingPage";
 
 const router = createBrowserRouter([
+  { path: "/", element: <LandingPage /> },
   {
     path: "/",
     element: <RootLayout />,

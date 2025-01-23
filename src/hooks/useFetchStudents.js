@@ -6,7 +6,10 @@ const useFetchStudents = ({ classId, uid }) => {
   const dispatch = useDispatch();
   const { students, loading } = useSelector((state) => state.students);
 
+  console.log(students);
+
   useEffect(() => {
+    if (!uid || !classId) return;
     const unsubscribe = dispatch(subscribeToStudents({ classId, uid }));
 
     return () => {
